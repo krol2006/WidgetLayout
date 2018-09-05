@@ -1,0 +1,245 @@
+/*----------------------------*/
+/*---------- MIXINS ----------*/
+/*----------------------------*/
+
+@mixin breakpoint($querystring) {
+  $valid: true;
+
+  @if type-of($querystring) != "string" {
+    @warn "querystring: #{$querystring} is not a string";
+    $valid: false;
+  }
+
+  @if $valid == true {
+    @media #{$querystring} {
+      @content;
+    }
+  }
+}
+
+/*----------------------------*/
+/*-------- VARIABLES----------*/
+/*----------------------------*/
+
+$md: "(max-width: 992px)";
+$sm: "(max-width: 768px)";
+$xs: "(max-width: 480px)";
+
+%boxTextHolder {
+  background-image: linear-gradient(transparent, rgba(234, 105, 3, .7));
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+%shadow {
+  box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, .4);
+}
+
+/*----------------------------*/
+/*--- RESET DEFAULT STYLES ---*/
+/*----------------------------*/
+
+* {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+body {
+  font: 14px Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/*----------------------------*/
+/*---------- ICONS -----------*/
+/*----------------------------*/
+
+@font-face {
+  font-family: "Icon";
+  src: url(data:application/font-ttf;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMg8SBT4AAAC8AAAAYGNtYXAXQtKvAAABHAAAAFRnYXNwAAAAEAAAAXAAAAAIZ2x5ZtvRGu0AAAF4AAAA0GhlYWQSD9+RAAACSAAAADZoaGVhB8IDxgAAAoAAAAAkaG10eAoAAAAAAAKkAAAAFGxvY2EAKAB8AAACuAAAAAxtYXhwAAoAMgAAAsQAAAAgbmFtZZlKCfsAAALkAAABhnBvc3QAAwAAAAAEbAAAACAAAwMAAZAABQAAApkCzAAAAI8CmQLMAAAB6wAzAQkAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAAADpFAPA/8AAQAPAAEAAAAABAAAAAAAAAAAAAAAgAAAAAAADAAAAAwAAABwAAQADAAAAHAADAAEAAAAcAAQAOAAAAAoACAACAAIAAQAg6RT//f//AAAAAAAg6RT//f//AAH/4xbwAAMAAQAAAAAAAAAAAAAAAQAB//8ADwABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAAAAAAAAAAIAADc5AQAAAAAEAAAAQAQAA0AACwAXACsALwAAATQ2MzIWFRQGIyImJTQ2MzIWFRQGIyImBTU0JiMhIgYVERQWMyEyNj0BBREBITUhAYBeQkJeXkJCXv6AXkJCXl5CQl4DACYa/YAaJiYaAoAaJgEA/oD+AAIAAqBCXl5CQl5eQkJeXkJCXl7+YBomJhr+wBomJhpgoAHA/sDAAAAAAQAAAAAAAL9IWxNfDzz1AAsEAAAAAADXeU2qAAAAANd5TaoAAAAABAADQAAAAAgAAgAAAAAAAAABAAADwP/AAAAEAAAAAAAEAAABAAAAAAAAAAAAAAAAAAAABQQAAAAAAAAAAAAAAAIAAAAEAAAAAAAAAAAKABQAHgBoAAEAAAAFADAABAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAOAK4AAQAAAAAAAQAHAAAAAQAAAAAAAgAHAGAAAQAAAAAAAwAHADYAAQAAAAAABAAHAHUAAQAAAAAABQALABUAAQAAAAAABgAHAEsAAQAAAAAACgAaAIoAAwABBAkAAQAOAAcAAwABBAkAAgAOAGcAAwABBAkAAwAOAD0AAwABBAkABAAOAHwAAwABBAkABQAWACAAAwABBAkABgAOAFIAAwABBAkACgA0AKRpY29tb29uAGkAYwBvAG0AbwBvAG5WZXJzaW9uIDEuMABWAGUAcgBzAGkAbwBuACAAMQAuADBpY29tb29uAGkAYwBvAG0AbwBvAG5pY29tb29uAGkAYwBvAG0AbwBvAG5SZWd1bGFyAFIAZQBnAHUAbABhAHJpY29tb29uAGkAYwBvAG0AbwBvAG5Gb250IGdlbmVyYXRlZCBieSBJY29Nb29uLgBGAG8AbgB0ACAAZwBlAG4AZQByAGEAdABlAGQAIABiAHkAIABJAGMAbwBNAG8AbwBuAC4AAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA) format('truetype');
+}
+
+.icon {
+  font: {
+    family: "Icon", sans-serif;
+    style: normal;
+  }
+
+  &--video::before {
+    content: "\e914";
+  }
+}
+
+/*----------------------------*/
+/*------ CONTENT STYLES ------*/
+/*----------------------------*/
+
+.wrapper {
+  padding: 0 10px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.content {
+  margin-top: 10px;
+}
+
+.grid {
+  height: 100%;
+  display: flex;
+
+  &__column {
+    flex-basis: 600px;
+    max-width: 600px;
+    margin-right: 10px;
+
+    @include breakpoint($sm){
+      flex-basis: auto;
+      margin: {
+        right: 0;
+        bottom: 10px;
+      }
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+
+  &__item {
+    @extend %shadow;
+    height: calc(50% - 5px);
+    width: calc(50% - 5px);
+    flex-basis: calc(50% - 5px);
+    max-width: 50%;
+    overflow: hidden;
+    position: relative;
+
+    @include breakpoint($sm){
+      margin-bottom: 10px;
+    }
+  }
+
+  @include breakpoint($sm){
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &--wrap {
+    justify-content: space-between;
+    align-content: space-between;
+    flex-wrap: wrap;
+
+    @include breakpoint($sm){
+      flex-direction: row;
+    }
+  }
+}
+
+.media {
+  $media: &;
+  @extend %shadow;
+  position: relative;
+
+  &__image {
+    width: 100%;
+  }
+
+  &__controls {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    &__video {
+      display: block;
+      width: 40px;
+      height: 40px;
+      background: rgba(234, 105, 3, .7);
+      text-decoration: none;
+      transition: background .3s;
+      text-align: center;
+      color: #fff;
+      line-height: 40px;
+
+      .icon {
+        font-size: 22px;
+      }
+
+      &:hover {
+        background: rgba(234, 105, 3, 1);
+      }
+    }
+  }
+
+  &__content {
+    @extend %boxTextHolder;
+    color: #fff;
+    padding: 10% 10px 10px;
+    max-height: 50%;
+
+    @include breakpoint($xs){
+      padding: {
+        left: 7px;
+        right: 7px;
+        bottom: 7px;
+      };
+    }
+
+    &__title {
+      font: {
+        size: 22px;
+        weight: bold;
+      };
+      margin-bottom: 5px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      @include breakpoint($md){
+        font-size: 18px;
+      }
+
+      @include breakpoint($xs){
+        font-size: 16px;
+      }
+    }
+
+    &__text {
+      font-size: 16px;
+
+      @include breakpoint($md){
+        font-size: 14px;
+      }
+
+      @include breakpoint($xs){
+        font-size: 12px;
+      }
+    }
+  }
+
+  &--smaller {
+    #{$media}__content {
+      &__title {
+        font: {
+          weight: normal;
+          size: 16px;
+        }
+        margin-bottom: 0;
+
+        @include breakpoint($md){
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
